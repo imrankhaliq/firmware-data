@@ -5,6 +5,9 @@ on:
     - cron: "0 * * * *" # Runs every 1 hour
   workflow_dispatch: # Allows manual trigger
 
+permissions:
+  contents: write # Robot ko file save karne ki ijazat deta hai
+
 jobs:
   sync:
     runs-on: ubuntu-latest
