@@ -1,0 +1,32 @@
+name: Global Firmware Sync
+
+on:
+  schedule:
+    - cron: "0 * * * *" # Runs every 1 hour
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          pip install requests
+
+      - name: Run Master Sync Engine
+        run: python sync_master.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "Firmware sync Robot"
+          git config --global user.email "sync-bot@dcunlockers.com"
+          git add merged_firmware_data.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-Sync: Added new firmwares and audited links" && git push)
