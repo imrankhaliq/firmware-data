@@ -6,7 +6,7 @@ on:
   workflow_dispatch: # Allows manual trigger
 
 permissions:
-  contents: write # Robot ko file save karne ki ijazat deta hai
+  contents: write # Ye line sab sy zaruri hai robot ko permission denay ke liye
 
 jobs:
   sync:
